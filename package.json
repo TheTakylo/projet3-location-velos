@@ -1,0 +1,11 @@
+{
+  "name": "projet3-location-velos",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:TheTakylo/projet3-location-velos.git",
+  "author": "TheTakylo <sebastien.thuret@yahoo.fr>",
+  "license": "MIT",
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.26.0"
+  }
+}
