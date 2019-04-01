@@ -1,0 +1,59 @@
+.marker-cluster-small {
+  background-color: rgba(41, 128, 185, 0.6); }
+  .marker-cluster-small div {
+    background-color: rgba(41, 128, 185, 0.6); }
+
+.marker-cluster-medium {
+  background-color: rgba(39, 174, 96, 0.6); }
+  .marker-cluster-medium div {
+    background-color: rgba(39, 174, 96, 0.6); }
+
+.marker-cluster-large {
+  background-color: rgba(192, 57, 43, 0.6); }
+  .marker-cluster-large div {
+    background-color: rgba(192, 57, 43, 0.6); }
+
+/* IE 6-8 fallback colors */
+.leaflet-oldie .marker-cluster-small {
+  background-color: #2ecc71; }
+  .leaflet-oldie .marker-cluster-small div {
+    background-color: #27ae60; }
+
+.leaflet-oldie .marker-cluster-medium {
+  background-color: #3498db; }
+  .leaflet-oldie .marker-cluster-medium div {
+    background-color: #2980b9; }
+
+.leaflet-oldie .marker-cluster-large {
+  background-color: #e74c3c; }
+  .leaflet-oldie .marker-cluster-large div {
+    background-color: #c0392b; }
+
+.marker-cluster {
+  background-clip: padding-box;
+  border-radius: 20px; }
+  .marker-cluster div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 15px;
+    font-family: 'Open Sans', Verdana, sans-serif; }
+  .marker-cluster span {
+    line-height: 30px; }
+
+#map {
+  width: 100%;
+  height: 600px; }
+
+#reservation-card {
+  height: 600px;
+  width: 100%; }
+  #reservation-card form {
+    display: block; }
+  #reservation-card #station-detail {
+    display: block; }
+
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vc3R5bGUuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNDLHlDQUF5QztFQUQxQztJQUdNLHlDQUF5Qzs7QUFHL0M7RUFDQyx3Q0FBd0M7RUFEekM7SUFHTSx3Q0FBd0M7O0FBRzlDO0VBQ0Msd0NBQXdDO0VBRHpDO0lBR00sd0NBQXdDOztBQUc5QztBQUNBO0VBQ0MseUJBQW1DO0VBRHBDO0lBR08seUJBQWtDOztBQUl6QztFQUNDLHlCQUFtQztFQURwQztJQUdPLHlCQUFtQzs7QUFJMUM7RUFDQyx5QkFBa0M7RUFEbkM7SUFHTyx5QkFBa0M7O0FBSXpDO0VBQ0MsNEJBQTRCO0VBQzVCLG1CQUFtQjtFQUZwQjtJQUtFLFdBQVc7SUFDWCxZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLGVBQWU7SUFDZixrQkFBa0I7SUFDbEIsbUJBQW1CO0lBQ25CLDZDQUE2QztFQVgvQztJQWNFLGlCQUFpQjs7QUFLbkI7RUFDQyxXQUFXO0VBQ1gsYUFBYTs7QUFJZDtFQUNDLGFBQWE7RUFDYixXQUFXO0VBRlo7SUFNRSxjQUFjO0VBTmhCO0lBVUUsY0FBYyIsImZpbGUiOiJzdHlsZS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubWFya2VyLWNsdXN0ZXItc21hbGwge1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDQxLCAxMjgsIDE4NSwgMC42KTtcblxuXHRkaXYge2JhY2tncm91bmQtY29sb3I6IHJnYmEoNDEsIDEyOCwgMTg1LCAwLjYpO31cbn1cblxuLm1hcmtlci1jbHVzdGVyLW1lZGl1bSB7XG5cdGJhY2tncm91bmQtY29sb3I6IHJnYmEoMzksIDE3NCwgOTYsIDAuNik7XG5cblx0ZGl2IHtiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDM5LCAxNzQsIDk2LCAwLjYpO31cbn1cblxuLm1hcmtlci1jbHVzdGVyLWxhcmdlIHtcblx0YmFja2dyb3VuZC1jb2xvcjogcmdiYSgxOTIsIDU3LCA0MywgMC42KTtcblxuXHRkaXYge2JhY2tncm91bmQtY29sb3I6IHJnYmEoMTkyLCA1NywgNDMsIDAuNik7fVxufVxuXG4vKiBJRSA2LTggZmFsbGJhY2sgY29sb3JzICovXG4ubGVhZmxldC1vbGRpZSAubWFya2VyLWNsdXN0ZXItc21hbGwge1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoNDYsIDIwNCwgMTEzKTtcblxuXHRkaXYgeyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMzksIDE3NCwgOTYpOyB9XG59XG5cblxuLmxlYWZsZXQtb2xkaWUgLm1hcmtlci1jbHVzdGVyLW1lZGl1bSB7XG5cdGJhY2tncm91bmQtY29sb3I6IHJnYig1MiwgMTUyLCAyMTkpO1xuXG5cdGRpdiB7IGJhY2tncm91bmQtY29sb3I6IHJnYig0MSwgMTI4LCAxODUpOyB9XG59XG5cblxuLmxlYWZsZXQtb2xkaWUgLm1hcmtlci1jbHVzdGVyLWxhcmdlIHtcblx0YmFja2dyb3VuZC1jb2xvcjogcmdiKDIzMSwgNzYsIDYwKTtcblxuXHRkaXYgeyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMTkyLCA1NywgNDMpOyB9XG59XG5cblxuLm1hcmtlci1jbHVzdGVyIHtcblx0YmFja2dyb3VuZC1jbGlwOiBwYWRkaW5nLWJveDtcblx0Ym9yZGVyLXJhZGl1czogMjBweDtcblxuXHRkaXYge1xuXHRcdHdpZHRoOiAzMHB4O1xuXHRcdGhlaWdodDogMzBweDtcblx0XHRtYXJnaW4tbGVmdDogNXB4O1xuXHRcdG1hcmdpbi10b3A6IDVweDtcblx0XHR0ZXh0LWFsaWduOiBjZW50ZXI7XG5cdFx0Ym9yZGVyLXJhZGl1czogMTVweDtcblx0XHRmb250LWZhbWlseTogJ09wZW4gU2FucycsIFZlcmRhbmEsIHNhbnMtc2VyaWY7XG5cdH1cblx0c3BhbiB7XG5cdFx0bGluZS1oZWlnaHQ6IDMwcHg7XG5cdH1cbn1cblxuXG4jbWFwIHtcblx0d2lkdGg6IDEwMCU7XG5cdGhlaWdodDogNjAwcHg7XG59XG5cblxuI3Jlc2VydmF0aW9uLWNhcmQge1xuXHRoZWlnaHQ6IDYwMHB4O1xuXHR3aWR0aDogMTAwJTtcblxuXG5cdGZvcm0ge1xuXHRcdGRpc3BsYXk6IGJsb2NrO1xuXHR9XG5cblx0I3N0YXRpb24tZGV0YWlsIHtcblx0XHRkaXNwbGF5OiBibG9jaztcblx0fVxufSJdLCJzb3VyY2VSb290IjoiIn0=*/
