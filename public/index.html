@@ -7,9 +7,59 @@
     <title>Vélo'V</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <link rel="stylesheet" href="build/app.css">
+    <link rel="stylesheet" href="build/style.css">
 </head>
 <body>
-    <div id="map" class="map"></div>
+    <nav class="navbar navbar-expand navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="build/images/logo.png" height="30" class="d-inline-block align-top" alt="">
+        </a>
+        <div class="collapse navbar-collapse">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#">Présentation</span></a>
+                <a class="nav-item nav-link" href="#">Réservations</a>
+                <a class="nav-item nav-link" href="#">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-7">
+                <div id="map" class="map"></div>
+            </div>
+            <div class="col-md-5">
+                <div class="card" id="reservation-card">
+                    <div class="card-header">Détail de la station</div>
+                    <div class="card-body">
+                        <div class="alert alert-secondary" role="alert">
+                            Veuillez sélectionner une station
+                        </div>
+                        <div id="station-detail" class="d-none">
+                            <h4 class="title">ddd</h4>
+                            <div class="address"></div>
+                            <div class="places"></div>
+                            <div class="available_bikes"></div>
+                        </div>
+                        <form class="d-none mt-5">
+                            <div class="form-group row">
+                                <label for="inputLastname" class="col-md-4 col-form-label">Nom</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="inputLastname" value="Nom">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputFirstname" class="col-md-4 col-form-label">Prénom</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="inputFirstname" placeholder="Prénom">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary float-right">Réserver</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <script src="build/runtime.js"></script>    
     <script src="build/app.js"></script>

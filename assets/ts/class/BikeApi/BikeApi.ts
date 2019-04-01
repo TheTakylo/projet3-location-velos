@@ -1,3 +1,5 @@
+import Station from "./Station";
+
 export default class BikeApi {
     
     /**
@@ -30,11 +32,14 @@ export default class BikeApi {
     * 
     * @async
     * 
-    * @returns {Promise<Array>} Liste des stations 
+    * @returns {Promise<Station[]>} Liste des stations 
     */
-    async load() {
-       return $.get('https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=' + this.apiKey).then(data => {
+    async load(): Promise<Station[]> {
+       return $.get('https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=' + this.apiKey)
+       .then((data: Station[]) => {
            this.stations = data;
+
+           return data;
        });
 }
 
