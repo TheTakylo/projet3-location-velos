@@ -1,14 +1,19 @@
-class LeafletMap {
+const L = require('leaflet');
+require('leaflet/dist/leaflet.css')
+require('leaflet.markercluster');
+require('../../images/marker.png');
+
+export default class LeafletMap {
     
-    mapId;
-    mapApi;
-    mapAccessToken;
-    mapMaxZoom;
-    mapStyleId;
-    mapDefaultView;
-    mapDefaultZoom;
+    mapId: string;
+    mapApi: string;
+    mapAccessToken: string;
+    mapMaxZoom: number;
+    mapStyleId: string;
+    mapDefaultView: L.LatLngExpression;
+    mapDefaultZoom: number;
     
-    map;
+    map: L.Map;
     mapCluster;
     mapPoints = [];
     
@@ -30,9 +35,9 @@ class LeafletMap {
         L.tileLayer(this.mapApi, {
             attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
             maxZoom: this.mapMaxZoom,
-            accessToken: this.mapAccessToken,
-            id: this.mapStyleId
-            
+            id: this.mapStyleId,
+            detectRetina: true,
+            accessToken: this.mapAccessToken
         }).addTo(this.map);
         
         
@@ -44,33 +49,33 @@ class LeafletMap {
         list.forEach(item => {
             // On definie un Point
             let p = [item.position.lat, item.position.lng];
-
+            
             // Ajout du point dans une variable contenant l'ensemble des points
             this.mapPoints.push(p);
-
+            
             // Ajout du point sur le layer
             this.mapCluster.addLayer(
                 L.marker(p, {
                     icon: L.icon({
-                        iconUrl: './images/marker.png', 
+                        iconUrl: './build/images/marker.png', 
                         iconSize: [55, 55],
                         iconAnchor: [24, 54]
                     })
                 })
-            )
-        });
-
-        // Ajout du layer sur la map
-        this.map.addLayer(this.mapCluster);
-
-        // On centre la carte par rapport au nuage de points
-        this.map.fitBounds(this.mapPoints);
-    };
-
-    onclick(callback) {
-        this.mapCluster.addEventListener('click', (event) => {
-            callback(event);
-        });
+                )
+            });
+            
+            // Ajout du layer sur la map
+            this.map.addLayer(this.mapCluster);
+            
+            // On centre la carte par rapport au nuage de points
+            this.map.fitBounds(this.mapPoints);
+        };
+        
+        onclick(callback) {
+            this.mapCluster.addEventListener('click', (event) => {
+                callback(event);
+            });
+        }
+        
     }
-    
-}

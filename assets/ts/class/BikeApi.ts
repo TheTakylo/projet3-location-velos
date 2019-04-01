@@ -1,4 +1,4 @@
-class BikeApi {
+export default class BikeApi {
     
     /**
     * @type {String} Clé de l'API
@@ -33,13 +33,9 @@ class BikeApi {
     * @returns {Promise<Array>} Liste des stations 
     */
     async load() {
-        return new Promise((resolve, reject) => {
-            $.get('https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=' + this.apiKey).then(data => {
-            this.stations = data;
-            
-            resolve(data);
-        });
-    });
+       return $.get('https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=' + this.apiKey).then(data => {
+           this.stations = data;
+       });
 }
 
 /**
@@ -75,3 +71,13 @@ getReservation() {
 }
 
 }
+
+
+
+        // return new Promise((resolve, reject) => {
+        //     $.get('https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=' + this.apiKey).then(data => {
+        //     this.stations = data;
+            
+        //     resolve(data);
+        // });
+    //});

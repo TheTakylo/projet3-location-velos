@@ -1,3 +1,9 @@
+
+require('../css/style.css');
+
+import LeafletMap from "./class/LeafletMap";
+import BikeApi from "./class/BikeApi";
+
 let myMap = new LeafletMap({
     mapId: 'map',
     mapApi: 'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}',
@@ -12,11 +18,13 @@ let bikeApi = new BikeApi({
     apiKey: '127afb8ee4f63cf897ba3944a3ffc79aa1616206'
 });
 
-bikeApi.load().then(data => {
-    myMap.setList(data);
+bikeApi.load().then(_ => {
+    console.log(_);
+    myMap.setList(bikeApi.stations);
     
     
     myMap.onclick(event => {
+        console.log(event)
         let station = event.layer._latlng;
         
         station = bikeApi.findStation(station.lat, station.lng);
