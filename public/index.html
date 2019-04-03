@@ -33,8 +33,7 @@
                     <div class="card-header">Détail de la station</div>
                     <div class="card-body">
                         
-                        
-                        <div class="alert alert-primary" id="default-alert" role="alert">
+                        <div class="alert alert-primary d-none" id="default-alert" role="alert">
                             Veuillez sélectionner une station.
                         </div>
                         <div class="alert alert-success d-none" id="success-alert" role="alert">
@@ -43,8 +42,11 @@
                         <div class="alert alert-danger d-none" id="error-alert" role="alert">
                             Veuillez remplir tous les champs.
                         </div>
-                        
-                        
+
+                        <div class="alert alert-primary has-reservation-item d-none" role="alert">
+                            Vous avez une réservation en cours.
+                        </div>
+
                         <div id="station-detail" class="d-none">
                             <h4> <span class="title"></span></h4>
                             <div class="mt-1 mb-3">
@@ -70,6 +72,7 @@
                             </div>
                         </div>
                         
+                        <button class="btn btn-danger has-reservation-item d-none mt-5" id="cancel-reservation" role="button">Annuler</button>
                         
                         <form id="reservation-form" class="d-none mt-5">
                             <div class="step-1">

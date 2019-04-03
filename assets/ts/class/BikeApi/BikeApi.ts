@@ -1,29 +1,34 @@
 import Station from "./Station";
 
+interface Reservation {
+    station: {
+        number: number;
+        contract_name: string;
+    };
+    expireAt: number;
+}
+
+interface BikeApiConfig {
+    apiKey: string;
+}
+
 export default class BikeApi {
     
     /**
     * @type {String} Clé de l'API
     */
-    apiKey;
+    private apiKey;
     
     /**
-    * @type {Array} Liste des stations 
+    * @type {Station[]} Liste des stations 
     */
-    stations;
-    
-    /**
-    * @default null
-    * @type {*} Réservation en cours 
-    */
-    currentReservation = null;
-    
+    private stations: Station[];
     
     /**
     * 
     * @param {Array} config 
     */
-    constructor(config) {
+    constructor(config: BikeApiConfig) {
         this.apiKey = config.apiKey;
     }
     
@@ -35,54 +40,68 @@ export default class BikeApi {
     * @returns {Promise<Station[]>} Liste des stations 
     */
     async load(): Promise<Station[]> {
-       return $.get('https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=' + this.apiKey)
-       .then((data: Station[]) => {
-           this.stations = data;
-
-           return data;
-       });
-}
-
-/**
-* Retourne une station par rapport à sa latitude et à sa longitude
-* 
-* @param {Number} lat 
-* @param {Number} lng 
-* 
-* @returns Station
-*/
-findStation(lat, lng) {
-    return this.stations.filter(station => {
-        return (station.position.lat === lat && lng === station.position.lng);
-    })
-}
-
-/**
-* Retourn true si une reservation est enregistrée
-* 
-* @returns {Boolean}
-*/
-hasReservation() {
-    return this.currentReservation !== null;
-}
-
-/**
-* Retourne la réservation enregistrée
-* 
-* @returns {*}
-*/
-getReservation() {
-    return this.currentReservation
-}
-
-}
-
-
-
-        // return new Promise((resolve, reject) => {
-        //     $.get('https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=' + this.apiKey).then(data => {
-        //     this.stations = data;
+        return $.get('https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=' + this.apiKey)
+        .then((data: Station[]) => {
+            this.stations = data;
             
-        //     resolve(data);
-        // });
-    //});
+            return data;
+        });
+    }
+    
+    find(number: number, contract_name: string): Station {
+        return this.stations.filter(station => {
+            return (station.number === number && contract_name === station.contract_name);
+        })[0];
+    }
+    
+    /**
+    * Retourn true si une reservation est enregistrée
+    * 
+    * @returns {Boolean}
+    */
+    hasReservation(): boolean {
+        return localStorage.getItem('reservation') !== null;
+    }
+    
+    /**
+    * Vérifie si la réservation à expirer
+    * 
+    * @returns {boolean | null}
+    */
+    hasExpired(): boolean | null {
+        if(!this.hasReservation()) {
+            return null;
+        }
+        
+        let expireAt = this.getReservation().expireAt;
+        let now = new Date(Date.now()).getTime();
+        
+        return expireAt < now;
+    }
+    
+    /**
+    * Retourne la réservation enregistrée
+    * 
+    * @returns {Reservation}
+    */
+    getReservation(): Reservation {
+        return <Reservation>JSON.parse(localStorage.getItem('reservation'));
+    }
+    
+    setReservaton(station: Station, expireAt: number) {
+        const data: Reservation = {
+            station: {
+                number: station.number,
+                contract_name: station.contract_name
+            },
+            expireAt: expireAt
+        };
+        
+        localStorage.setItem('reservation', JSON.stringify(data));
+    }
+    
+    deleteReservation(): void {
+        localStorage.clear();
+    }
+    
+}
