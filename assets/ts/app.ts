@@ -1,12 +1,10 @@
 require('bootstrap/dist/css/bootstrap.min.css');
-require('../images/marker-green.png');
-require('../images/marker-red.png');
-require('../images/logo.png');
 
 import BikeApi from "./class/BikeApi/BikeApi";
 import LeafletMap from "./class/LeafletMap/LeafletMap";
 import SimpleSign from "./class/SimpleSign/SimpleSign";
 import Station from "./class/BikeApi/Station";
+import Slider from "./class/Slider/Slider";
 
 const revervationMap = new LeafletMap({
     selector: 'map',
@@ -185,3 +183,6 @@ bikeApi.load().then(data => {
     }
     
 });
+
+
+let slider = new Slider($('#slider'));

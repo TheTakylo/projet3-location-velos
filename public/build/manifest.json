@@ -7,7 +7,12 @@
   "build/images/layers-2x.png": "/build/images/layers-2x.png",
   "build/images/layers.png": "/build/images/layers.png",
   "build/images/logo.png": "/build/images/logo.png",
+  "build/images/marker-2.png": "/build/images/marker-2.png",
   "build/images/marker-green.png": "/build/images/marker-green.png",
   "build/images/marker-icon.png": "/build/images/marker-icon.png",
-  "build/images/marker-red.png": "/build/images/marker-red.png"
+  "build/images/marker-red.png": "/build/images/marker-red.png",
+  "build/images/slide1.jpg": "/build/images/slide1.jpg",
+  "build/images/slide2.jpg": "/build/images/slide2.jpg",
+  "build/images/slide3.jpg": "/build/images/slide3.jpg",
+  "build/images/slide1.png": "/build/images/slide1.png"
 }

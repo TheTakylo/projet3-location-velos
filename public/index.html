@@ -23,6 +23,32 @@
             </div>
         </div>
     </nav>
+    <div id="slider">
+        <div class="slide visible">
+            <img src="build/images/slide1.jpg" alt="Slide 1">
+            <div class="slider-content">
+                <h3>Titre 1</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, illum.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="build/images/slide2.jpg" alt="Slide 1">
+            <div class="slider-content">
+                <h3>Titre 2</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, quia voluptatem recusandae molestiae soluta ipsa reprehenderit repellendus odio incidunt eligendi.</p>
+                <a href="#map" class="btn btn-primary">Voir</a>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="build/images/slide3.jpg" alt="Slide 1">
+            <div class="slider-content">
+                <h3>Titre 3</h3>
+                <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+        </div>
+        <a href="#" class="prev-slide"><em class="fa fa-arrow-left"></em></a>
+        <a href="#" class="next-slide"><em class="fa fa-arrow-right"></em></a>
+    </div>
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-7">
@@ -42,11 +68,11 @@
                         <div class="alert alert-danger d-none" id="error-alert" role="alert">
                             Veuillez remplir tous les champs.
                         </div>
-
+                        
                         <div class="alert alert-primary has-reservation-item d-none" role="alert">
                             Vous avez une réservation en cours.
                         </div>
-
+                        
                         <div id="station-detail" class="d-none">
                             <h4> <span class="title"></span></h4>
                             <div class="mt-1 mb-3">
@@ -76,7 +102,7 @@
                         
                         <form id="reservation-form" class="d-none mt-5">
                             <div class="step-1">
-
+                                
                                 <div class="form-group row">
                                     <label for="inputLastname" class="col-md-4 col-form-label">Nom</label>
                                     <div class="col-md-8">
