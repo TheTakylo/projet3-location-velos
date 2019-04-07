@@ -1,18 +1,9 @@
 import Station from "../BikeApi/Station";
+import LeafletMapConfig from "./LeafletMapConfig";
 
 const L = require('leaflet');
 require('leaflet/dist/leaflet.css')
 require('leaflet.markercluster');
-
-class LeafletMapConfig {
-    public selector: string;
-    public api: string;
-    public accessToken: string;
-    public maxZoom: number;
-    public styleId: string;
-    public defaultView: [number, number];
-    public defaultZoom: number;
-}
 
 export default class LeafletMap {
     

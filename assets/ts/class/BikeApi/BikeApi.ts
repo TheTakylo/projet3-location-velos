@@ -1,19 +1,6 @@
 import Station from "./Station";
-
-class ReservationUser {
-    public firstname: string;
-    public lastname: string;
-}
-
-class Reservation {
-    public station: Station;
-    public expireAt: number;
-    public user: ReservationUser;
-}
-
-class BikeApiConfig {
-    public apiKey: string;
-}
+import Reservation from "./StationReservation";
+import ReservationUser from "./StationReservationUser";
 
 export default class BikeApi {
 
@@ -31,7 +18,7 @@ export default class BikeApi {
     * 
     * @param {Array} config 
     */
-    constructor(config: BikeApiConfig) {
+    constructor(config: {apiKey: string}) {
         this.apiKey = config.apiKey;
     }
 
