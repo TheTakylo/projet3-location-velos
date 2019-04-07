@@ -1,32 +1,36 @@
+import Station from "../BikeApi/Station";
+
 const L = require('leaflet');
 require('leaflet/dist/leaflet.css')
 require('leaflet.markercluster');
 
-interface LeafletMapConfig {
-    selector: string;
-    api: string;
-    accessToken: string;
-    maxZoom: number;
-    styleId: string;
-    defaultView: [number, number];
-    defaultZoom: number;
+class LeafletMapConfig {
+    public selector: string;
+    public api: string;
+    public accessToken: string;
+    public maxZoom: number;
+    public styleId: string;
+    public defaultView: [number, number];
+    public defaultZoom: number;
 }
 
 export default class LeafletMap {
     
-    selector: string;
-    api: string;
-    accessToken: string;
-    maxZoom: number;
-    styleId: string;
-    defaultView: [number, number];
-    defaultZoom: number;
+    private selector: string;
+    private api: string;
+    private accessToken: string;
+    private maxZoom: number;
+    private styleId: string;
+    private defaultView: [number, number];
+    private defaultZoom: number;
     
-    map: L.Map;
-    mapCluster = L.markerClusterGroup({
+    private map: L.Map;
+    private mapCluster = L.markerClusterGroup({
         showCoverageOnHover: false // Désactivation des zones de markers au hover
     });
-    mapMarkersPositions: Array<[number, number]> = [];
+
+    private mapMarkersPositions: Array<[number, number]> = [];
+
     
     constructor(mapConfig: LeafletMapConfig) {
         this.selector = mapConfig.selector;
@@ -40,7 +44,7 @@ export default class LeafletMap {
         this.initMap();
     };
     
-    public initMap(): void {
+    private initMap(): void {
         this.map = L.map(this.selector).setView(this.defaultView, this.defaultZoom);
         
         L.tileLayer(this.api, {
@@ -56,29 +60,52 @@ export default class LeafletMap {
         this.map.addLayer(this.mapCluster);
     }
     
-    public addItem(markerPositions: [number, number], iconUrl: string = './build/images/marker-icon.png'): L.Marker {
+    public addList(stations: Station[]) {
         
-        // Ajout de la position du marker dans une variable contenant l'ensemble des positions
-        this.mapMarkersPositions.push(markerPositions);
-        
-        
-        // Icon 
-        let icon: L.Icon = L.icon({
-            iconUrl: iconUrl,
-            iconSize: [55, 55],
-            iconAnchor: [24, 54]
+        stations.forEach(station => {
+            
+            
+            const position: [number, number] = [station.position.lat, station.position.lng];
+            
+            // Ajout de la position du marker dans une variable contenant l'ensemble des positions
+            this.mapMarkersPositions.push(position);
+            
+            
+            const iconType = (station.status == 'OPEN') ? 'marker-green.png' : 'marker-red.png';
+            
+            // Icon 
+            const icon: L.Icon = L.icon({
+                iconUrl:  "./build/images/" + iconType,
+                iconSize: [55, 55],
+                iconAnchor: [24, 54]
+            });
+            
+            // Marker
+            const marker: L.Marker = L.marker(position, { icon: icon, station: station });
+            
+            
+            // Ajout du point sur le layer
+            this.mapCluster.addLayer( marker );
+            
+            marker.addEventListener('click', () => {
+                
+                document.dispatchEvent(new CustomEvent('leafletmap.select', {
+                    detail: station
+                }));
+            });
+            
         });
-
-        // Marker
-        let marker: L.Marker = L.marker(markerPositions, { icon: icon });
         
-        // Ajout du point sur le layer
-        this.mapCluster.addLayer( marker );
-
-        return marker;
+        this.center();
     };
-
+    
     public center(): void {
         this.map.fitBounds(this.mapMarkersPositions);
+    }
+    
+    public onSelect(callback): void {
+        document.addEventListener('leafletmap.select', (event: any) => {
+            callback(event.detail);
+        });
     }
 }
