@@ -5,7 +5,7 @@ export default class SimpleSign {
     
     height: number;
     width: number;
-    draggable: boolean;
+    draggable: boolean = false;
     started: boolean = false;
     
     static sign(element: string) {
@@ -26,6 +26,11 @@ export default class SimpleSign {
         this.canvas.addEventListener('mousedown', this.start.bind(this));
         this.canvas.addEventListener('mousemove', this.draw.bind(this));
         this.canvas.addEventListener('mouseup', this.end.bind(this));
+
+
+        this.canvas.addEventListener('touchstart', this.start.bind(this));
+        this.canvas.addEventListener('touchmove', this.draw.bind(this));
+        this.canvas.addEventListener('touchend', this.end.bind(this));
     };
     
     public isEmpty(): boolean {
@@ -45,10 +50,11 @@ export default class SimpleSign {
     
     private end(): void {
         this.draggable = false;
+        this.context.beginPath();
     };
     
     private draw(event): void {
-        if(this.draggable) {
+        if(this.draggable && this.started) {
             this.context.lineTo(event.offsetX, event.offsetY);
             this.context.stroke();        
         }
