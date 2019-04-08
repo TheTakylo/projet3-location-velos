@@ -9,6 +9,7 @@ import AlertComponent from "./Component/Alerts/AlertComponent";
 import StationComponent from "./Component/Reservation/StationComponent";
 import FirstStep from "./Component/Reservation/Steps/FirstStep";
 import SecondStep from "./Component/Reservation/Steps/SecondStep";
+import SimpleScroll from "./simplescroll";
 
 let slider = new Slider($('#slider'));
 
@@ -111,6 +112,8 @@ if (bikeApi.hasReservation() && !bikeApi.hasExpired()) {
 }
 
 reservationMap.onSelect((station: Station) => {
+
+    SimpleScroll.scrollTo('#reservation-card');
     
     if (bikeApi.hasReservation() && !bikeApi.hasExpired()) {
         alert.render($appAlerts, ALERTS.reservation_error);
