@@ -26,9 +26,12 @@ export default class FirstStep extends AbstractComponent {
 
         const $form = $("form.reservation-form");
 
+        let $firstNameInput = $form.find("input[name='firstname']").val(sessionStorage.getItem('firstname'));
+        let $lastNameInput = $form.find("input[name='lastname']").val(sessionStorage.getItem('lastname'));
+
         $form.find('.substep1').click(() => {
-            const firstname: string = $form.find("input[name='firstname']").val().toString().trim();
-            const lastname: string = $form.find("input[name='lastname']").val().toString().trim();
+            const firstname: string = $firstNameInput.val().toString().trim();
+            const lastname: string = $lastNameInput.val().toString().trim();
             
             // Vérification de la présence d'un nom & prénom
             if(firstname == '' || lastname == '') {

@@ -32,10 +32,15 @@ bikeApi.load().then(data => {
     
 });
 
-
+const ALERTS = {
+    default: { type: 'primary', message: 'Veuillez sélectionnez une station.' },
+    form_errors: {type: 'danger', message: 'Veuillez remplir tous les champs.'},
+    reservation_success: {type: 'success', message: 'Votre réservation à bien été confirmée.'},
+    reservation_already: { type: 'primary', message: 'Vous avez une réservation en cours.' },
+    reservation_error: { type: 'danger', message: "Vous avez déjà une réservation en cours. Si vous réservez un autre vélo, votre réservation actuelle sera annulée" }
+}
 
 const $appAlerts = $('#app-alerts');
-const $appContent = $('#app-content');
 const $appStation = $('#app-station');
 const $appForm = $('#app-form');
 
@@ -44,11 +49,57 @@ const stationComponent = new StationComponent();
 const firstStep = new FirstStep();
 const secondStep = new SecondStep();
 
+
+let startReservationProcess = (station,) => {
+    stationComponent.destroy();
+    
+    stationComponent.render($appStation, {
+        station: station,
+        badge: (station.status == 'OPEN') ? true : false
+    });
+    
+    firstStep.render($appForm, {station: station}, (response) => {
+        
+        if (!response.success) {
+            alert.render($appAlerts, ALERTS.form_errors);
+        } else {
+            
+            secondStep.render($appForm, response.data, (response) => {
+                if(!response.success) {
+                    alert.render($appAlerts, ALERTS.form_errors);
+                } else {
+                    let expireAt = new Date(Date.now());
+                    expireAt.setMinutes(expireAt.getMinutes() + 20);
+                    
+                    const user = {
+                        firstname: response.data.firstname,
+                        lastname: response.data.lastname
+                    }
+
+                    sessionStorage.setItem('firstname', user.firstname);
+                    sessionStorage.setItem('lastname', user.lastname);
+                    
+                    bikeApi.setReservaton(response.data.station, user, expireAt.getTime());
+                    alert.render($appAlerts, ALERTS.reservation_success);
+                    
+                    secondStep.destroy();
+
+                    stationComponent.render($appStation,  {
+                        station: station,
+                        badge: (station.status == 'OPEN') ? true : false,
+                        confirmed: true
+                    });
+                }
+            });
+        }
+    });
+}
+
 if (bikeApi.hasReservation() && !bikeApi.hasExpired()) {
-    alert.render($appAlerts, { type: 'primary', message: 'Vous avez une réservation en cours.' });
-
+    alert.render($appAlerts, ALERTS.reservation_already);
+    
     const station = bikeApi.getReservation().station;
-
+    
     stationComponent.render($appStation,  {
         station: station,
         badge: (station.status == 'OPEN') ? true : false,
@@ -56,52 +107,17 @@ if (bikeApi.hasReservation() && !bikeApi.hasExpired()) {
     });
     
 } else {
-    alert.render($appAlerts, { type: 'primary', message: 'Veuillez sélectionnez une station.' });
+    alert.render($appAlerts, ALERTS.default);
 }
-
 
 reservationMap.onSelect((station: Station) => {
     
     if (bikeApi.hasReservation() && !bikeApi.hasExpired()) {
-        
-        alert.render($appAlerts, { type: 'danger', message: 'Vous avez déjà une réservation en cours. Veuillez l\'annuler' });
-        
+        alert.render($appAlerts, ALERTS.reservation_error);
     } else {
         alert.destroy();
-        
-        stationComponent.render($appStation, {
-            station: station,
-            badge: (station.status == 'OPEN') ? true : false,
-        });
-        
-        firstStep.render($appForm, {station: station}, (response) => {
-            alert.destroy();
-            
-            if (!response.success) {
-                alert.render($appAlerts, {type: 'danger', message: 'Veuillez remplir tous les champs.'});
-            } else {
-                
-                secondStep.render($appForm, response.data, (response) => {
-                    if(!response.success) {
-                        alert.render($appAlerts, {type: 'danger', message: 'Veuillez remplir tous les champs.'});
-                    } else {
-                        let expireAt = new Date(Date.now());
-                        expireAt.setMinutes(expireAt.getMinutes() + 20);
-
-                        const user = {
-                            firstname: response.data.firstname,
-                            lastname: response.data.lastname
-                        }
-
-                        bikeApi.setReservaton(response.data.station, user, expireAt.getTime());
-                        alert.render($appAlerts, {type: 'success', message: 'Votre réservation à bien été confirmée.'});
-
-                        secondStep.destroy();
-                    }
-                });
-            }
-        });
-        
     }
+    
+    startReservationProcess(station);
     
 });
