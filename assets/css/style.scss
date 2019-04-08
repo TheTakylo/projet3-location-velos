@@ -45,3 +45,23 @@ $red: #e11f26;
 		
 	}
 }
+
+@media all and (max-width: 768px) {
+	#slider .slide .slider-content {
+		left: 50%;
+	}
+
+	#app-container {
+	
+		display: flex;
+		flex-direction: column;
+
+		#map {
+			height: 350px;
+		}
+
+		#map, #reservation-card {
+			width: 100%;
+		}
+	}	
+}
