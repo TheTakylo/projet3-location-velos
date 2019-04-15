@@ -1,126 +1,108 @@
 require('bootstrap/dist/css/bootstrap.min.css');
 require('bootstrap/dist/js/bootstrap.min.js');
 
-import BikeApi from "./class/BikeApi/BikeApi";
-import Station from "./class/BikeApi/Station";
-import LeafletMap from "./class/LeafletMap/LeafletMap";
 import Slider from "./class/Slider/Slider";
-import AlertComponent from "./Component/Alerts/AlertComponent";
-import StationComponent from "./Component/Reservation/StationComponent";
-import FirstStep from "./Component/Reservation/Steps/FirstStep";
-import SecondStep from "./Component/Reservation/Steps/SecondStep";
-import SimpleScroll from "./simplescroll";
+import AppComponent from "./Component/AppComponent";
 
-let slider = new Slider($('#slider'));
+new Slider($('#slider'));
 
-const reservationMap = new LeafletMap({
-    selector: 'map',
-    api: 'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}',
-    accessToken: 'pk.eyJ1IjoidGhldGFreWxvIiwiYSI6ImNqc3lqZHN1czA0a3M0M296ZHd5OG5sN3gifQ.l3oeViJzU6cRTckBDLto2Q',
-    maxZoom: 16,
-    styleId: 'mapbox.streets',
-    defaultView: [45.75, 4.85],
-    defaultZoom: 13
-});
 
-const bikeApi = new BikeApi({
-    apiKey: '127afb8ee4f63cf897ba3944a3ffc79aa1616206'
-});
+let app = new AppComponent().run();
 
-bikeApi.load().then(data => {
+// const reservationMap = new LeafletMap({
+//     selector: 'map',
+//     api: 'https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}',
+//     accessToken: 'pk.eyJ1IjoidGhldGFreWxvIiwiYSI6ImNqc3lqZHN1czA0a3M0M296ZHd5OG5sN3gifQ.l3oeViJzU6cRTckBDLto2Q',
+//     maxZoom: 16,
+//     styleId: 'mapbox.streets',
+//     defaultView: [45.75, 4.85],
+//     defaultZoom: 13
+// });
+
+// const bikeApi = new BikeApi('127afb8ee4f63cf897ba3944a3ffc79aa1616206');
+
+// bikeApi.load().then(data => { reservationMap.addList(data); });
+
+
+// const alertComponent = new AlertComponent();
+// const stationComponent = new StationComponent();
+// const step1Component = new Step1Component();
+// const step2Component = new Step2Component();
+
+// if (bikeApi.getReservation()) {
     
-    reservationMap.addList(data);
+//     let cancellable = false;
     
-});
-
-const ALERTS = {
-    default: { type: 'primary', message: 'Veuillez sélectionnez une station.' },
-    form_errors: {type: 'danger', message: 'Veuillez remplir tous les champs.'},
-    reservation_success: {type: 'success', message: 'Votre réservation à bien été confirmée.'},
-    reservation_already: { type: 'primary', message: 'Vous avez une réservation en cours.' },
-    reservation_error: { type: 'danger', message: "Vous avez déjà une réservation en cours. Si vous réservez un autre vélo, votre réservation actuelle sera annulée" }
-}
-
-const $appAlerts = $('#app-alerts');
-const $appStation = $('#app-station');
-const $appForm = $('#app-form');
-
-const alert = new AlertComponent();
-const stationComponent = new StationComponent();
-const firstStep = new FirstStep();
-const secondStep = new SecondStep();
-
-
-let startReservationProcess = (station,) => {
-    stationComponent.destroy();
+//     if(bikeApi.getReservation().hasExpired()) {
+//         alertComponent.render('reservation_expired');
+//         bikeApi.deleteReservation();
+//     } else {
+//         cancellable = true;
+//         alertComponent.render('reservation_already');
+//     }
     
-    stationComponent.render($appStation, {
-        station: station,
-        badge: (station.status == 'OPEN') ? true : false
-    });
-    
-    firstStep.render($appForm, {station: station}, (response) => {
+//     stationComponent.render({ station: bikeApi.getReservation().station, cancellable: cancellable })
+//     .then(data => {
         
-        if (!response.success) {
-            alert.render($appAlerts, ALERTS.form_errors);
-        } else {
-            
-            secondStep.render($appForm, response.data, (response) => {
-                if(!response.success) {
-                    alert.render($appAlerts, ALERTS.form_errors);
-                } else {
-                    let expireAt = new Date(Date.now());
-                    expireAt.setMinutes(expireAt.getMinutes() + 20);
-                    
-                    const user = {
-                        firstname: response.data.firstname,
-                        lastname: response.data.lastname
-                    }
+//     });
+    
+// } else {
+//     alertComponent.render('default');
+// }
 
-                    sessionStorage.setItem('firstname', user.firstname);
-                    sessionStorage.setItem('lastname', user.lastname);
-                    
-                    bikeApi.setReservaton(response.data.station, user, expireAt.getTime());
-                    alert.render($appAlerts, ALERTS.reservation_success);
-                    
-                    secondStep.destroy();
+// let showStation = (station: Station, reservation?: Reservation | null) => {
+//     alertComponent.destroy();
 
-                    stationComponent.render($appStation,  {
-                        station: station,
-                        badge: (station.status == 'OPEN') ? true : false,
-                        confirmed: true
-                    });
-                }
-            });
-        }
-    });
-}
+//     if(reservation instanceof Reservation && !reservation.hasExpired()) {
+//         alertComponent.render('reservation_already');
+//         stationComponent.render({ station: station });
+//     } else {
+//         stationComponent.render({ station: station });
+//     }
+// }
 
-if (bikeApi.hasReservation() && !bikeApi.hasExpired()) {
-    alert.render($appAlerts, ALERTS.reservation_already);
+// let startReversation = async (station: Station) => {
+//     showStation(station, bikeApi.getReservation());
     
-    const station = bikeApi.getReservation().station;
+//     try {
+        
+//         let step1 = await step1Component.render();
+//         let step2 = await step2Component.render();
+        
+//         let expireAt = new Date(Date.now());
+//         expireAt.setMinutes(expireAt.getMinutes() + 20);
+        
+//         bikeApi.setReservaton(station, step1, expireAt.getTime());
+        
+//         alertComponent.render('reservation_success');
+        
+//         localStorage.setItem('firstname', step1.firstname);
+//         localStorage.setItem('lastname', step1.lastname);
+        
+//         step2Component.destroy();
+        
+//     } catch {
+//         alertComponent.render('form_errors');
+//     }
     
-    stationComponent.render($appStation,  {
-        station: station,
-        badge: (station.status == 'OPEN') ? true : false,
-        confirmed: true
-    });
     
-} else {
-    alert.render($appAlerts, ALERTS.default);
-}
+// };
 
-reservationMap.onSelect((station: Station) => {
+// reservationMap.onSelect((station: Station) => {
+//     startReversation(station);
+//     SimpleScroll.scrollTo('#reservation-card');
+// });
 
-    SimpleScroll.scrollTo('#reservation-card');
-    
-    if (bikeApi.hasReservation() && !bikeApi.hasExpired()) {
-        alert.render($appAlerts, ALERTS.reservation_error);
-    } else {
-        alert.destroy();
-    }
-    
-    startReservationProcess(station);
-    
-});
+
+
+// // function dateDiff(start, end) {
+// //     return (end - start).toString()
+// // }
+
+// // let start = new Date(Date.now()).getTime();
+// // let end = bikeApi.getReservation().expireAt
+
+// // console.log(start);
+// // console.log(end);
+
+// // console.log(new Date(dateDiff(start, end)));

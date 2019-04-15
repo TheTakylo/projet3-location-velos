@@ -1,15 +1,18 @@
 import AbstractComponent from "../AbstractComponent";
 
 export default class StationComponent extends AbstractComponent {
-    protected $view: string = `
+
+    public $container: string = "#app-station";
+
+    public $view: string = `
     <h4><span class="title">{{station.name}}</span></h4>
     <div class="mt-1 mb-3">
-        {{#if badge}}
+        {{#if station.badge}}
         <span class="badge badge-success">
             Station ouverte
         </span>
         {{/if}}
-        {{#unless badge}}
+        {{#unless station.badge}}
         <span class="badge badge-danger">
             Station fermée
         </span>
@@ -33,7 +36,7 @@ export default class StationComponent extends AbstractComponent {
             <span class="available_bikes">{{station.available_bike_stands}}</span>
         </div>
     </div>
-    {{#if confirmed}}
+    {{#if cancellable}}
         <button  data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-danger mt-4 cancel-reservation" role="button">Annuler</button>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -50,7 +53,7 @@ export default class StationComponent extends AbstractComponent {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-danger">Confirmer</button>
+                    <button type="button" id="delete-reservation" class="btn btn-danger">Confirmer</button>
                 </div>
                 </div>
             </div>
@@ -58,13 +61,18 @@ export default class StationComponent extends AbstractComponent {
     {{/if}}
     `;
 
-    public render($container: JQuery<HTMLElement>, $data?: {}, callback?: CallableFunction): void {
-        this.$container = $container;
-        this.compile($data);
+    public run(): void { 
+
+        if(this.$class.api.hasReservation()) {
+            this.$data["cancellable"] = true;
+            this.$data["station"] = this.$class.api.getReservation().station;
+            this.compile();
 
 
-        $('button.cancel-reservation').click(e => {
-
-        });
+            $("#delete-reservation").click(e => {
+                this.$class.api.deleteReservation();
+            });
+        }
     }
+
 } 

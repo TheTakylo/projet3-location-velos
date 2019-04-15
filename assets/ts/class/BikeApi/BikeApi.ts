@@ -18,8 +18,8 @@ export default class BikeApi {
     * 
     * @param {Array} config 
     */
-    constructor(config: {apiKey: string}) {
-        this.apiKey = config.apiKey;
+    constructor(apiKey: string) {
+        this.apiKey = apiKey;
     }
 
     /**
@@ -31,10 +31,12 @@ export default class BikeApi {
     */
     async load(): Promise<Station[]> {
         return $.get('https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=' + this.apiKey)
-            .then((data: Station[]) => {
-                this.stations = data;
+            .then((data) => {
+                this.stations = data.map((stationObj) => {
+                    return new Station(stationObj);
+                });
 
-                return data;
+                return this.stations;
             });
     }
 
@@ -50,23 +52,7 @@ export default class BikeApi {
     * @returns {Boolean}
     */
     hasReservation(): boolean {
-        return localStorage.getItem('reservation') !== null;
-    }
-
-    /**
-    * Vérifie si la réservation à expirer
-    * 
-    * @returns {boolean | null}
-    */
-    hasExpired(): boolean | null {
-        if (!this.hasReservation()) {
-            return null;
-        }
-
-        let expireAt = this.getReservation().expireAt;
-        let now = new Date(Date.now()).getTime();
-
-        return expireAt < now;
+        return sessionStorage.getItem('reservation') !== null;
     }
 
     /**
@@ -74,22 +60,26 @@ export default class BikeApi {
     * 
     * @returns {Reservation}
     */
-    getReservation(): Reservation {
-        return <Reservation>JSON.parse(localStorage.getItem('reservation'));
+    getReservation(): Reservation | null {
+        if(sessionStorage.getItem('reservation') === null) {
+            return;
+        }
+        
+        return new Reservation(JSON.parse(sessionStorage.getItem('reservation')));
     }
 
     setReservaton(station: Station, user: ReservationUser, expireAt: number) {
-        const data: Reservation = {
+        const data = new Reservation({
             station: station,
             expireAt: expireAt,
             user: user
-        };
+        });
 
-        localStorage.setItem('reservation', JSON.stringify(data));
+        sessionStorage.setItem('reservation', JSON.stringify(data));
     }
 
     deleteReservation(): void {
-        localStorage.clear();
+        sessionStorage.clear();
     }
 
 }

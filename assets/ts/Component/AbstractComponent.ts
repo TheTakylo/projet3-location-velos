@@ -1,83 +1,79 @@
 import Handlebars from 'handlebars/dist/cjs/handlebars';
+import BikeApi from '../class/BikeApi/BikeApi';
+import LeafletMap from '../class/LeafletMap/LeafletMap';
+import ClassesArray from './class';
 
 /**
- * AbstractComponent
- * 
- * 
- *
- * @export
- * @abstract
- * @class AbstractComponent
- */
+* AbstractComponent
+*
+* @export
+* @abstract
+* @class AbstractComponent
+*/
 export default abstract class AbstractComponent {
     
-    /**
-     * 
-     * Code HTML du composant
-     *
-     * @protected
-     * @type {string}
-     * @memberof AbstractComponent
-     */
-    protected $view: string;
-    
-
-    /**
-     * 
-     * Conteneur HTML ou le composant doit être injecté
-     *
-     * @protected
-     * @type {JQuery<HTMLElement>}
-     * @memberof AbstractComponent
-     */
-    protected $container: JQuery<HTMLElement>;
-    
-
-    /**
-     * 
-     * Créer une instance du composant
-     * 
-     * @param {{}} [$data]
-     * @memberof AbstractComponent
-     */
-    public constructor() { };
-    
-
-    /**
-     * 
-     * Effectue le rendu du composant avec ses données dans son conteneur
-     *
-     * @param {JQuery<HTMLElement>} $container
-     * @memberof AbstractComponent
-     */
-    public render($container: JQuery<HTMLElement>, $data?: {}, callback?: CallableFunction): void {
-        this.$container = $container;
-
-        this.compile($data);
+    protected $class: { 
+        api: BikeApi, 
+        map: LeafletMap
     };
     
-
+    protected $components: any;
+    
+    
     /**
-     * 
-     * Détruit le composant en vidant le conteneur
-     *
-     * @memberof AbstractComponent
-     */
-    public destroy(): void {
-        if(!this.$container) return;
+    * Code HTML du composant
+    */
+    public abstract $view: string;
+    
+    /**
+    * Code HTML du composant
+    */
+    public $data: any;
+    
+    
+    /**
+    * Conteneur HTML ou le composant doit être injecté
+    */
+    public abstract $container: string;
+    
+    
+    /**
+    * Créer une instance du composant
+    */
+    public constructor() {
+        this.$class = ClassesArray;
+    };
+    
+    
+    /**
+    * Effectue le rendu du composant avec ses données dans son conteneur
+    */
+    public render($data: any = {}): void {
+        this.$data = $data;
+        this.compile();
         
-        this.$container.html("");
+        return this.run();
     };
-
-
-    /**
-     * Render the view with the data
-     * 
-     * @memberof AbstractComponent
-     */
-    protected compile($data?: {}): void {
+    
+    protected compile(): void {
+        if(!this.$view || !this.$container) return;
+        
         const template = Handlebars.compile(this.$view);
-        this.$container.html(template($data));
+        document.querySelector(this.$container).innerHTML = template(this.$data);
     }
-
+    
+    public abstract run(): void;
+    
+    /**
+    * 
+    * Détruit le composant en vidant le conteneur
+    */
+    public destroy(): void {
+        if (!this.$container) throw new Error("No container");
+        
+        document.querySelector(this.$container).innerHTML = "";
+    };
+    
+    protected set(v) {}
+    
 }

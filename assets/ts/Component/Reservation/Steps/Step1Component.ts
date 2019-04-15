@@ -1,8 +1,12 @@
 import AbstractComponent from '../../AbstractComponent';
+import AlertComponent from '../../Alerts/AlertComponent';
+import Step2Component from './Step2Component';
 
-export default class FirstStep extends AbstractComponent {
-    
-    protected $view: string = `
+export default class Step1Component extends AbstractComponent {
+
+    public $container: string = "#app-form";
+
+    public $view: string = `
     <form class="reservation-form">
         <div class="form-group row">
             <label for="inputLastname" class="col-md-4 col-form-label">Nom</label>
@@ -20,32 +24,35 @@ export default class FirstStep extends AbstractComponent {
     </form>
     `;
 
-    public render($container: JQuery<HTMLElement>, $data?: any, callback?: CallableFunction): void {
-        this.$container = $container;
-        this.compile($data);
+    public run(): void {
+        const alert = new AlertComponent();
+        const step2 = new Step2Component();
+
 
         const $form = $("form.reservation-form");
 
-        let $firstNameInput = $form.find("input[name='firstname']").val(sessionStorage.getItem('firstname'));
-        let $lastNameInput = $form.find("input[name='lastname']").val(sessionStorage.getItem('lastname'));
+        let $firstNameInput = $form.find("input[name='firstname']").val(localStorage.getItem('firstname'));
+        let $lastNameInput = $form.find("input[name='lastname']").val(localStorage.getItem('lastname'));
 
         $form.find('.substep1').click(() => {
             const firstname: string = $firstNameInput.val().toString().trim();
             const lastname: string = $lastNameInput.val().toString().trim();
-            
-            // Vérification de la présence d'un nom & prénom
-            if(firstname == '' || lastname == '') {
-               return callback({success: false});
-            }
 
+            // Vérification de la présence d'un nom & prénom
+            if (firstname == '' || lastname == '') {
+                alert.render('form_errors');
+                return;
+            }
+            localStorage.setItem('firstname', firstname);
+            localStorage.setItem('lastname', lastname);
+            
             const data = {
-                station: $data.station,
-                firstname: firstname, 
+                firstname: firstname,
                 lastname: lastname
             }
 
-            callback({success: true, data: data});
+            step2.render({station: this.$data.station, data: data});
+
         });
-        
     };
 }
