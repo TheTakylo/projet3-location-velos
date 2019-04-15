@@ -43,8 +43,7 @@ Encore
     })
     .configureFilenames({
         js: '[name].js',
-        images: 'images/[name].[ext]',
-        fonts: 'fonts/[name].[ext]'
+        images: 'images/[name].[ext]'
     })
 
     .copyFiles({
