@@ -7,4 +7,3 @@ import AppComponent from "./Component/AppComponent";
 new Slider($('#slider'));
 
 new AppComponent().run();
-

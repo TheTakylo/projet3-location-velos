@@ -152,9 +152,6 @@ export default class StationComponent extends AbstractComponent {
             let sec = s.toString() + " seconde" + ((s > 1) ? "s" : "");
             let min = m.toString() + " minute" + (( m > 1) ? "s" : "");
 
-            console.log(s);
-            console.log(m);
-
             this.$data.remaining_seconds = sec;
             this.$data.remaining_minutes = (m < 1) ? false : min;
 

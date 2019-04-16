@@ -3,6 +3,7 @@ import AbstractComponent from '../../AbstractComponent';
 import AlertComponent from '../../Alerts/AlertComponent';
 import Station from '../../../class/BikeApi/Station';
 import StationComponent from '../StationComponent';
+import BikeApi from '../../../class/BikeApi/BikeApi';
 
 export default class Step2Component extends AbstractComponent {
 
@@ -27,15 +28,13 @@ export default class Step2Component extends AbstractComponent {
         const $form = $("form.reservation-form");
 
         $form.find('button.submit').click(_ => {
-            
             if (canvas.isEmpty()) {
                 return alert.render('form_errors');
             }
 
-
             const station = <Station>this.$data.station;
             let expireAt = new Date(Date.now());
-            expireAt.setMinutes(expireAt.getMinutes() + 1);
+            expireAt.setMinutes(expireAt.getMinutes() + 20);
 
             this.$class.api.setReservaton(station, this.$data.data, expireAt.getTime());
 
