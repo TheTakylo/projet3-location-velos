@@ -17,7 +17,7 @@ export default class AlertComponent extends AbstractComponent {
             'station_no_bikes_available': { type: 'danger', message: 'La station ne dispose plus de vélos disponible.'},
             'reservation_success': { type: 'success', message: 'Votre réservation à bien été confirmée.' },
             'reservation_expired': { type: 'danger', message: 'Votre réservation précédente a expiré.' },
-            'reservation_already': { type: 'primary', message: "Vous avez déjà une réservation en cours. Si vous réservez un autre vélo, votre réservation actuelle sera annulée" }
+            'reservation_already': { type: 'primary', message: "Vous avez déjà une réservation en cours. Veuillez annuler votre réservation précédente." }
         }
         
         this.$data = ALERTS[data];

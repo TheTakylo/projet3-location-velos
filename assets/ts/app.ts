@@ -2,8 +2,8 @@ require('bootstrap/dist/css/bootstrap.min.css');
 require('bootstrap/dist/js/bootstrap.min.js');
 
 import Slider from "./class/Slider/Slider";
-import AppComponent from "./Component/AppComponent";
+import Services from "./Services/StoreService";
 
 new Slider($('#slider'));
 
-new AppComponent().run();
+Services.app.render();

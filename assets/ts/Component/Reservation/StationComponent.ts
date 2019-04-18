@@ -1,5 +1,5 @@
+import Services from "../../Services/StoreService";
 import AbstractComponent from "../AbstractComponent";
-import AlertComponent from "../Alerts/AlertComponent";
 
 export default class StationComponent extends AbstractComponent {
 
@@ -63,57 +63,55 @@ export default class StationComponent extends AbstractComponent {
             </div>
         {{/if}}
 
-        {{#if show_remaining_time}}
-        <div class="mt-3 alert alert-danger">
+        <div class="mt-3 alert alert-danger d-none" id="reservation_timer">
             Votre réservation à la station <strong>{{station.name}}</strong> expirera dans 
             <strong>
-                {{#if remaining_minutes}}{{remaining_minutes}} et {{/if}}
-                {{#if remaining_seconds}}{{remaining_seconds}}{{/if}}
+                <span id="time_minutes"><span class="minutes"></span> et </span>
+                <span id="time_seconds"><span class="seconds"></span></span>
             </strong>
         </div>
-        {{/if}}
 
     {{/if}}
     `;
 
-    public run(): void { 
+    public run(): void {
 
-        let alert = new AlertComponent();
-        alert.destroy();
+        Services.alert.destroy();
 
-        if(this.$class.api.hasReservation() && !this.$class.api.hasExpired()) {
+        if (Services.$api.hasReservation() && !Services.$api.hasExpired()) {
+            
             this.$data["cancellable"] = true;
-            this.$data["station"] = this.$class.api.getReservation().station;
+            this.$data["station"] = Services.$api.getReservation().station;
             this.compile();
-
+            
             this.startRemainingTimer();
-
+            
             $("#delete-reservation").click(e => {
                 this.cancelReservation();
             });
+            
         }
-
-        if(this.$data.station === undefined) {
-            alert.render('default');
+        
+        if (this.$data.station === undefined) {
+            Services.alert.render('default');
         }
-
     }
 
     private cancelReservation(): void {
-        this.$class.api.deleteReservation();
+        Services.$api.deleteReservation();
         this.render();
     }
 
 
-    private timeDiff(end: number) : { minutes: number, seconds: number} {
+    private timeDiff(end: number): { minutes: number, seconds: number } {
         let now = new Date().getTime();
 
         let seconds: number = (end - now) / 1000;
 
-        let days: number = Math.floor( seconds /  86400);
-        seconds -= days *86400;
-        let hours: number = Math.floor( seconds /  3600);
-        seconds -= hours *3600;
+        let days: number = Math.floor(seconds / 86400);
+        seconds -= days * 86400;
+        let hours: number = Math.floor(seconds / 3600);
+        seconds -= hours * 3600;
         let minutes: number = Math.floor(seconds / 60);
         seconds -= minutes * 60;
 
@@ -126,22 +124,29 @@ export default class StationComponent extends AbstractComponent {
     }
 
     private startRemainingTimer() {
-        this.$data.show_remaining_time = true;
+        let $timer = $("#reservation_timer"); 
+        setTimeout(() => { $timer.removeClass("d-none"); }, 1000);
         
-        const diff = this.timeDiff(this.$class.api.getReservation().expireAt);
+        let $time_seconds = $("#time_seconds");
+        let $time_minutes = $("#time_minutes");
+        
+        let $minutes_span = $time_minutes.find('.minutes');
+        let $seconds_span = $time_seconds.find('.seconds');
+        
+        const diff = this.timeDiff(Services.$api.getReservation().expireAt);
         
         let s = diff.seconds;
         let m = diff.minutes;
-        
         
         let intervalID = setInterval(() => {
             
             s--;
             
-            if(s < 1) {
+            if (s < 1) {
                 m--;
                 
-                if(m < 1 && s < 1) {
+                if (m < 1 && s < 1) {
+                    $timer.addClass("d-none");
                     clearInterval(intervalID);
                     this.cancelReservation();
                 } else {
@@ -149,13 +154,16 @@ export default class StationComponent extends AbstractComponent {
                 }
             }
 
-            let sec = s.toString() + " seconde" + ((s > 1) ? "s" : "");
-            let min = m.toString() + " minute" + (( m > 1) ? "s" : "");
+            let sec: string = s.toString() + " seconde" + ((s > 1) ? "s" : "");
+            let min: string = m.toString() + " minute" + ((m > 1) ? "s" : "");
 
-            this.$data.remaining_seconds = sec;
-            this.$data.remaining_minutes = (m < 1) ? false : min;
-
-            this.compile();
+            if((m < 1)) {
+                $minutes_span.hide();
+            } else {
+                $minutes_span.html(min);
+            }
+            
+            $seconds_span.html(sec);
         }, 1000);
 
     }

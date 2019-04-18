@@ -11,7 +11,7 @@ export default class Reservation {
     }
 
     constructor(data: any) {
-        this.station = data["station"];
+        this.station = new Station(data["station"]);
         this.expireAt = data["expireAt"];
         this.user = data["user"];
     }

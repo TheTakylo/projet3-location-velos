@@ -1,9 +1,7 @@
-import SimpleSign from '../../../class/SimpleSign/SimpleSign';
-import AbstractComponent from '../../AbstractComponent';
-import AlertComponent from '../../Alerts/AlertComponent';
 import Station from '../../../class/BikeApi/Station';
-import StationComponent from '../StationComponent';
-import BikeApi from '../../../class/BikeApi/BikeApi';
+import SimpleSign from '../../../class/SimpleSign/SimpleSign';
+import Services from '../../../Services/StoreService';
+import AbstractComponent from '../../AbstractComponent';
 
 export default class Step2Component extends AbstractComponent {
 
@@ -21,24 +19,22 @@ export default class Step2Component extends AbstractComponent {
     `;
 
     public run(): void {
-        const alert = new AlertComponent();
-        const stationComponent = new StationComponent();
 
         const canvas = SimpleSign.sign("canvasSignature");
         const $form = $("form.reservation-form");
 
         $form.find('button.submit').click(_ => {
             if (canvas.isEmpty()) {
-                return alert.render('form_errors');
+                return Services.alert.render('form_errors');
             }
 
             const station = <Station>this.$data.station;
             let expireAt = new Date(Date.now());
             expireAt.setMinutes(expireAt.getMinutes() + 20);
 
-            this.$class.api.setReservaton(station, this.$data.data, expireAt.getTime());
+            Services.$api.setReservaton(station, this.$data.data, expireAt.getTime());
 
-            stationComponent.render();
+            Services.station.render();
 
             this.destroy();
         });
