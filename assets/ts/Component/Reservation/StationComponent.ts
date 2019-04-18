@@ -76,12 +76,12 @@ export default class StationComponent extends AbstractComponent {
 
     public run(): void {
 
-        Services.alert.destroy();
+        Services.$alert.destroy();
 
-        if (Services.$api.hasReservation() && !Services.$api.hasExpired()) {
+        if (Services.api.hasReservation() && !Services.api.hasExpired()) {
             
             this.$data["cancellable"] = true;
-            this.$data["station"] = Services.$api.getReservation().station;
+            this.$data["station"] = Services.api.getReservation().station;
             this.compile();
             
             this.startRemainingTimer();
@@ -93,12 +93,12 @@ export default class StationComponent extends AbstractComponent {
         }
         
         if (this.$data.station === undefined) {
-            Services.alert.render('default');
+            Services.$alert.render('default');
         }
     }
 
     private cancelReservation(): void {
-        Services.$api.deleteReservation();
+        Services.api.deleteReservation();
         this.render();
     }
 
@@ -133,7 +133,7 @@ export default class StationComponent extends AbstractComponent {
         let $minutes_span = $time_minutes.find('.minutes');
         let $seconds_span = $time_seconds.find('.seconds');
         
-        const diff = this.timeDiff(Services.$api.getReservation().expireAt);
+        const diff = this.timeDiff(Services.api.getReservation().expireAt);
         
         let s = diff.seconds;
         let m = diff.minutes;

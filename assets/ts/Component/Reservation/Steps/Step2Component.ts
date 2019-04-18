@@ -25,16 +25,16 @@ export default class Step2Component extends AbstractComponent {
 
         $form.find('button.submit').click(_ => {
             if (canvas.isEmpty()) {
-                return Services.alert.render('form_errors');
+                return Services.$alert.render('form_errors');
             }
 
             const station = <Station>this.$data.station;
             let expireAt = new Date(Date.now());
             expireAt.setMinutes(expireAt.getMinutes() + 20);
 
-            Services.$api.setReservaton(station, this.$data.data, expireAt.getTime());
+            Services.api.setReservaton(station, this.$data.data, expireAt.getTime());
 
-            Services.station.render();
+            Services.$station.render();
 
             this.destroy();
         });

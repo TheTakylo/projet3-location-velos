@@ -26,15 +26,15 @@ export default class Step1Component extends AbstractComponent {
     `;
 
     public run(): void {
-        if(Services.$api.hasReservation()) {
-            Services.alert.render('reservation_already');
+        if(Services.api.hasReservation()) {
+            Services.$alert.render('reservation_already');
             return;
         }
         
         this.$data.reservation_available = true;
 
         if (this.$data.station.available_bikes < 1) {
-            Services.alert.render('station_no_bikes_available');
+            Services.$alert.render('station_no_bikes_available');
             this.$data.reservation_available = false;
 
             this.compile();
@@ -53,7 +53,7 @@ export default class Step1Component extends AbstractComponent {
 
             // Vérification de la présence d'un nom & prénom
             if (firstname == '' || lastname == '') {
-                Services.alert.render('form_errors');
+                Services.$alert.render('form_errors');
                 return;
             }
             localStorage.setItem('firstname', firstname);
@@ -64,7 +64,7 @@ export default class Step1Component extends AbstractComponent {
                 lastname: lastname
             }
 
-            Services.step2.render({ station: this.$data.station, data: data });
+            Services.$step2.render({ station: this.$data.station, data: data });
 
         });
     };

@@ -6,4 +6,4 @@ import Services from "./Services/StoreService";
 
 new Slider($('#slider'));
 
-Services.app.render();
+Services.$app.render();
