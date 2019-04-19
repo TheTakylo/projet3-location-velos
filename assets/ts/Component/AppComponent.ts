@@ -1,6 +1,6 @@
 import Station from "../class/BikeApi/Station";
-import Services from "../Services/StoreService";
 import SimpleScroll from "../class/SimpleScroll/SimpleScroll";
+import Services from "../Services/StoreService";
 import AbstractComponent from "./AbstractComponent";
 
 export default class AppComponent extends AbstractComponent {

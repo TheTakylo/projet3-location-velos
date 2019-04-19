@@ -1,7 +1,4 @@
 import Handlebars from 'handlebars/dist/cjs/handlebars';
-import BikeApi from '../class/BikeApi/BikeApi';
-import LeafletMap from '../class/LeafletMap/LeafletMap';
-import StoreService from '../Services/StoreService';
 
 /**
 * AbstractComponent
@@ -63,9 +60,5 @@ export default abstract class AbstractComponent {
 
         document.querySelector(this.$container).innerHTML = "";
     };
-
-    public set data(value) {
-        
-    }
 
 }

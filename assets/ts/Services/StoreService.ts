@@ -1,26 +1,26 @@
 import BikeApi from "../class/BikeApi/BikeApi";
 import LeafletMap from "../class/LeafletMap/LeafletMap";
 import AlertComponent from "../Component/Alerts/AlertComponent";
+import AppComponent from "../Component/AppComponent";
 import StationComponent from "../Component/Reservation/StationComponent";
 import Step1Component from "../Component/Reservation/Steps/Step1Component";
 import Step2Component from "../Component/Reservation/Steps/Step2Component";
-import AppComponent from "../Component/AppComponent";
 
 class StoreService {
-    
+
     private static instance: StoreService;
-    
+
     public api: BikeApi;
     public map: LeafletMap;
-    
+
     public $app: AppComponent;
     public $alert: AlertComponent;
     public $station: StationComponent;
     public $step1: Step1Component;
     public $step2: Step2Component;
-    
+
     private constructor() { }
-    
+
     static getInstance(): StoreService {
         if (!StoreService.instance) {
             StoreService.instance = new StoreService();
@@ -34,17 +34,17 @@ class StoreService {
                 defaultView: [45.75, 4.85],
                 defaultZoom: 13
             });
-            
+
             StoreService.instance.$app = new AppComponent();
             StoreService.instance.$alert = new AlertComponent();
             StoreService.instance.$station = new StationComponent();
             StoreService.instance.$step1 = new Step1Component();
             StoreService.instance.$step2 = new Step2Component();
         }
-        
+
         return StoreService.instance;
     }
-    
+
 }
 
 const Services = StoreService.getInstance();

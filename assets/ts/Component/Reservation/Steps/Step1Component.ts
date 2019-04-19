@@ -26,11 +26,11 @@ export default class Step1Component extends AbstractComponent {
     `;
 
     public run(): void {
-        if(Services.api.hasReservation()) {
+        if (Services.api.hasReservation()) {
             Services.$alert.render('reservation_already');
             return;
         }
-        
+
         this.$data.reservation_available = true;
 
         if (this.$data.station.available_bikes < 1) {
