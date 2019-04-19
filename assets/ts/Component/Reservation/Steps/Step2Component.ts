@@ -28,7 +28,9 @@ export default class Step2Component extends AbstractComponent {
                 return Services.$alert.render('form_errors');
             }
 
-            const station = <Station>this.$data.station;
+            let station = <Station>this.$data.station;
+            this.$data.station = station.available_bikes--;
+
             let expireAt = new Date(Date.now());
             expireAt.setMinutes(expireAt.getMinutes() + 20);
 
