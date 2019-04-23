@@ -78,12 +78,13 @@
 			transform: translate(-50%, -50%);
 
 			background-color: rgba(0, 0, 0, .7);
-			padding: 60px 30px;
-
+			padding: 20px;
+			z-index: 1;
 			color: #fff;
 
-			h3 {}
-			p {}
+			img {
+				margin-bottom: 30px;
+			}
 		}
 	}
 }

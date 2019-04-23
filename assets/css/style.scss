@@ -10,16 +10,17 @@ $red: #e11f26;
 }
 
 #app-container {
-	
+	height: 100vh;
 	display: flex;
 	flex-direction: row;
 	
 	#map {
 		width: 65%;
-		height: 650px;
+		height: 100%;
 	}
 	
 	#reservation-card {
+		height: 100%;
 		width: 35%;
 	}
 }

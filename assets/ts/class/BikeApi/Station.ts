@@ -1,3 +1,5 @@
+import LeafletMap from "../LeafletMap/LeafletMap";
+
 export default class Station {
     public number: number;
     public contract_name: string;
@@ -15,6 +17,10 @@ export default class Station {
     public available_bikes: number;
     public last_update: Date;
     public badge: boolean;
+
+    public getLeafletIcon(): L.Icon {
+        return (this.status == 'OPEN') ? LeafletMap.openIcon : LeafletMap.closedIcon;
+    }
 
     constructor(data: any) {
         this.number = data["number"];

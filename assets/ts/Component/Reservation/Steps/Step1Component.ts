@@ -27,7 +27,14 @@ export default class Step1Component extends AbstractComponent {
 
     public run(): void {
         if (Services.api.hasReservation()) {
-            Services.$alert.render('reservation_already');
+
+            if(Services.api.hasExpired()) {
+                Services.api.deleteReservation();
+                Services.$alert.render('reservation_already');
+            } else {
+                Services.$alert.render('reservation_already');
+            }
+
             return;
         }
 

@@ -32,7 +32,7 @@ export default class Step2Component extends AbstractComponent {
             this.$data.station = station.available_bikes--;
 
             let expireAt = new Date(Date.now());
-            expireAt.setMinutes(expireAt.getMinutes() + 2);
+            expireAt.setMinutes(expireAt.getMinutes() + 20);
 
             Services.api.setReservaton(station, this.$data.data, expireAt.getTime());
 

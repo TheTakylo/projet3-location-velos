@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="build/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" id="navbar">
         <a class="navbar-brand" href="#">
             <img src="build/images/logo.png" height="30" class="d-inline-block align-top" alt="">
         </a>
@@ -20,8 +20,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Présentation</span></a>
-                <a class="nav-item nav-link" href="#">Réservations</a>
+                <a class="nav-item nav-link active" href="#slider">Présentation</span></a>
+                <a class="nav-item nav-link" href="#map">Réservations</a>
                 <a class="nav-item nav-link" href="#">Contact</a>
             </div>
         </div>
@@ -29,24 +29,36 @@
     
     <div id="slider">
         <div class="slide visible">
-            <img src="build/images/slide1.jpg" alt="Slide 1">
+            <img src="build/images/slider/slide1.jpg" alt="Slide 1">
             <div class="slider-content">
-                <h3>Titre 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, illum.</p>
+                <img src="build/images//slider/steps/step1.png" alt="">
+                <h3>Étape 1: Choix de la station</h3>
+                <p>Choisissez une station en naviguant sur la carte. Cliquez sur les ronds de couleurs pour afficher plus de stations dans une zone</p>
+                <a href="#map" class="btn btn-primary" id="goto-map">Voir la carte</a>
             </div>
         </div>
         <div class="slide">
-            <img src="build/images/slide2.jpg" alt="Slide 1">
+            <img src="build/images/slider/slide2.jpg" alt="Slide 1">
             <div class="slider-content">
-                <h3>Titre 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, illum.</p>
+                <img src="build/images//slider/steps/step2.png" alt="">
+                <h3>Étape 2: Réserver un vélo</h3>
+                <p>Après avoir choisi une station, vous pouvez voir ces informations. Réserver un vélo un remplissant le formulaire, où choisissez une autre station en retournant sur la carte</p>
             </div>
         </div>
         <div class="slide">
-            <img src="build/images/slide3.jpg" alt="Slide 1">
+            <img src="build/images/slider/slide3.jpg" alt="Slide 1">
             <div class="slider-content">
-                <h3>Titre 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, illum.</p>
+                <img src="build/images//slider/steps/step3.png" alt="">
+                <h3>Étape 3: Signez éléctroniquement</h3>
+                <p>Une fois vos informations personnelles remplies. Signez électroniquement afin de confirmer votre réservation</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="build/images/slider/slide3.jpg" alt="Slide 1">
+            <div class="slider-content">
+                <img src="build/images//slider/steps/step4.png" alt="">
+                <h3>Votre réservation est validée!</h3>
+                <p>Votre réservation est maintenant validée. Vous pouvez l'annuler à tout moment. Elle restera active pendant 20 minutes, passée ce délai elle sera annulé</p>
             </div>
         </div>
         <a href="#" class="prev-slide"><em class="fa fa-arrow-left"></em></a>

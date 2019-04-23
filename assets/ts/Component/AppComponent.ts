@@ -13,10 +13,7 @@ export default class AppComponent extends AbstractComponent {
             .load()
             .then(data => {
                 // Ajout des données (stations) sur la carte
-                Services.map.addList(data);
-
-                // Quand l'utilisateur clique sur une station 
-                Services.map.onSelect((station: Station) => {
+                Services.map.addList(data, (station: Station) => {
                     SimpleScroll.scrollTo('#reservation-card');
 
                     Services.$station.render({ station: station });
