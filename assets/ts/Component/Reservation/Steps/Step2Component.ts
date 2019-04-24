@@ -35,7 +35,7 @@ export default class Step2Component extends AbstractComponent {
             expireAt.setMinutes(expireAt.getMinutes() + 20);
 
             Services.api.setReservaton(station, this.$data.data, expireAt.getTime());
-
+            Services.setReserved();
             Services.$station.render();
 
             this.destroy();

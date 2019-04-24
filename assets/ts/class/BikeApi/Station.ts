@@ -22,6 +22,10 @@ export default class Station {
         return (this.status == 'OPEN') ? LeafletMap.openIcon : LeafletMap.closedIcon;
     }
 
+    public getPosition(): [number, number] | L.LatLngExpression {
+        return [this.position.lat, this.position.lng];
+    }
+
     constructor(data: any) {
         this.number = data["number"];
         this.contract_name = data["contract_name"];

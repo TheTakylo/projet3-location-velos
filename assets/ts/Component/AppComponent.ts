@@ -8,6 +8,10 @@ export default class AppComponent extends AbstractComponent {
     public run(): void {
         Services.$station.render();
 
+        if(Services.api.hasReservation() && !Services.api.hasExpired()) {
+            Services.map.setDefaultStation(Services.api.getReservation().station);
+        }
+
         // Chargement des données depuis l'API
         Services.api
             .load()

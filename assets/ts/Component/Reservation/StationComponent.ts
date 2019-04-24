@@ -77,6 +77,8 @@ export default class StationComponent extends AbstractComponent {
     private $seconds_span;
     private $minutes_span;
 
+    private intervalID;
+
     public run(): void {
 
         Services.$alert.destroy();
@@ -105,6 +107,7 @@ export default class StationComponent extends AbstractComponent {
     }
 
     private cancelReservation(): void {
+        clearInterval(this.intervalID);
         Services.api.deleteReservation();
         this.render();
     }
@@ -146,7 +149,7 @@ export default class StationComponent extends AbstractComponent {
 
         let lastM = false;
 
-        let intervalID = setInterval(() => {
+        this.intervalID = setInterval(() => {
             let [m, s] = this.getDiff();
 
             if (s === 0) {
@@ -154,8 +157,6 @@ export default class StationComponent extends AbstractComponent {
             }
 
             if (lastM && s === 0) {
-                clearInterval(intervalID);
-
                 $timer.addClass("d-none");
                 this.cancelReservation();
             }
