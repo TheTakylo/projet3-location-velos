@@ -13,7 +13,7 @@
 		object-fit: cover;
 	}
 	
-	.prev-slide, .next-slide {
+	.prev-slide, .next-slide, .pause-slide {
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
@@ -36,6 +36,17 @@
 	
 	.next-slide {
 		right: 0;
+	}
+
+	.pause-slide {
+		top: initial;
+		bottom: 25px;
+		left: 50%;
+		transform: translateX(-50%);
+
+		&.play-slide {
+			display: none;
+		}
 	}
 	
 	.slide {

@@ -3,17 +3,22 @@ export default class Slider {
     private $slider: JQuery<HTMLElement>;
     private $nextButton: JQuery<HTMLElement>;
     private $prevButton: JQuery<HTMLElement>;
+    private $pauseButton: JQuery<HTMLElement>;
+    private $playButton: JQuery<HTMLElement>;
     private $slides: JQuery<HTMLElement>;
 
     private slideDuration: number = 4000;
     private slidesCount: number;
     private currentSlide: number = 0;
+    private isPaused: boolean;
 
     constructor(slider: JQuery<HTMLElement>) {
         this.$slider = slider;
         this.$slides = this.$slider.find('.slide');
         this.$nextButton = this.$slider.find('.next-slide');
         this.$prevButton = this.$slider.find('.prev-slide');
+        this.$pauseButton = this.$slider.find('.pause-slide');
+        this.$playButton = this.$slider.find('.play-slide');
 
         this.slidesCount = this.$slides.length;
 
@@ -49,6 +54,20 @@ export default class Slider {
             clearInterval(intervalID);
             intervalID = setInterval(() => { this.next(); }, this.slideDuration);
         });
+
+        this.$pauseButton.click((e) => {
+            e.preventDefault();
+
+            if(this.isPaused) {
+                this.isPaused = false;
+                this.$pauseButton.show();
+                this.$playButton.hide();
+            } else {
+                this.isPaused = true;
+                this.$pauseButton.hide();
+                this.$playButton.show();
+            }
+        });
     }
 
     private showSlide(slide: number): void {
@@ -67,11 +86,18 @@ export default class Slider {
     }
 
     private next(): void {
+        if(this.isPaused) {
+            return;
+        }
         let slide = this.currentSlide + 1;
         this.showSlide(slide);
     }
 
     private prev(): void {
+        if(this.isPaused) {
+            return;
+        }
+
         let slide = this.currentSlide - 1;
         this.showSlide(slide);
     }
