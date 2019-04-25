@@ -29,7 +29,6 @@ export default class Step2Component extends AbstractComponent {
             }
 
             let station = <Station>this.$data.station;
-            this.$data.station = station.available_bikes--;
 
             let expireAt = new Date(Date.now());
             expireAt.setMinutes(expireAt.getMinutes() + 20);
@@ -41,7 +40,10 @@ export default class Step2Component extends AbstractComponent {
             this.destroy();
         });
 
-        $form.find('button.form-cancel').click(_ => { this.destroy(); });
+        $form.find('button.form-cancel').click(_ => { 
+            this.destroy();
+            Services.$step1.render({station: <Station>this.$data.station});
+        });
         $form.find('button.sign-reset').click(_ => { canvas.reset(); });
     };
 }
