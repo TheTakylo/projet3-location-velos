@@ -10,7 +10,7 @@ $red: #e11f26;
 }
 
 #app-container {
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: row;
 	
@@ -50,19 +50,40 @@ $red: #e11f26;
 @media all and (max-width: 768px) {
 	#slider .slide .slider-content {
 		left: 50%;
+		width: 90%;
+		height: 75%;
+
+		img {
+			max-height: 160px;
+			object-fit: contain;
+		}
 	}
 
 	#app-container {
 	
-		display: flex;
 		flex-direction: column;
 
 		#map {
 			height: 350px;
 		}
 
+		#reservation-card {
+			height: 630px;
+		}
+
 		#map, #reservation-card {
 			width: 100%;
+			display: block;
 		}
 	}	
+}
+
+
+@media all and (max-width: 630px) { 
+	#slider .slide .slider-content {
+		left: 50px;
+		right: 50px;
+		width: auto;
+		transform: translate(0, -50%);
+	}
 }
