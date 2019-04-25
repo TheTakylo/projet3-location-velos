@@ -13,14 +13,14 @@ $red: #e11f26;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: row;
+
+	#map, #reservation-card { height: 100%; }
 	
 	#map {
 		width: 65%;
-		height: 100%;
 	}
 	
 	#reservation-card {
-		height: 100%;
 		width: 35%;
 	}
 }
@@ -48,36 +48,34 @@ $red: #e11f26;
 }
 
 @media all and (max-width: 768px) {
-	#slider .slide .slider-content {
-		left: 50%;
-		width: 90%;
-		height: 75%;
-
-		img {
-			max-height: 160px;
-			object-fit: contain;
+	#slider {
+		height: 700px;
+		
+		.slide .slider-content {
+			left: 50%;
+			width: 90%;
+			height: 75%;
+			
+			img {
+				max-height: 160px;
+				object-fit: contain;
+			}
 		}
 	}
-
-	#app-container {
 	
+	#app-container {
 		flex-direction: column;
 
-		#map {
-			height: 350px;
-		}
-
-		#reservation-card {
-			height: 630px;
-		}
-
+		#map { height: 375px; }
+		
+		#reservation-card { height: 630px; }
+		
 		#map, #reservation-card {
 			width: 100%;
 			display: block;
 		}
 	}	
 }
-
 
 @media all and (max-width: 630px) { 
 	#slider .slide .slider-content {
