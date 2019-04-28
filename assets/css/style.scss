@@ -10,12 +10,13 @@ $red: #e11f26;
 }
 
 #app-container {
-	height: 100vh;
+	height: auto;
 	min-height: 100vh;
+
 	display: flex;
 	flex-direction: row;
 
-	#map, #reservation-card { height: 100%; }
+	#map, #reservation-card { height: 100vh; }
 	
 	#map {
 		width: 65%;
@@ -67,9 +68,9 @@ $red: #e11f26;
 	#app-container {
 		flex-direction: column;
 
-		#map { height: 375px; }
+		#map { height: 350px; }
 		
-		#reservation-card { height: 630px; }
+		#reservation-card { height: auto; min-height: 350px; padding-bottom: 25px; }
 		
 		#map, #reservation-card {
 			width: 100%;
