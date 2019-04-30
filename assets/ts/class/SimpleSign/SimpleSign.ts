@@ -1,3 +1,4 @@
+
 export default class SimpleSign {
     
     canvas;
@@ -40,8 +41,6 @@ export default class SimpleSign {
     }
     
     public reset(): void {
-        console.log(this.height);
-        console.log(this.width);
         this.context.clearRect(0, 0, this.width, this.height);
     }
     
@@ -62,13 +61,16 @@ export default class SimpleSign {
             return;
         }
         
-        if(event.touches !== undefined) {
+        event.preventDefault();
+        
+        if (event.changedTouches) {
             let touch = event.touches[0];
+            let rect = this.canvas.getBoundingClientRect();
             
-            let top = touch.pageX - touch.target.offsetLeft;
-            let left = touch.pageY - touch.target.offsetTop;
+            let x = touch.clientX - rect.left;
+            let y = touch.clientY - rect.top;
             
-            this.context.lineTo(top, left);
+            this.context.lineTo(x, y);
         } else {
             this.context.lineTo(event.offsetX, event.offsetY);
         }
