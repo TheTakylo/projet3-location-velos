@@ -63,13 +63,15 @@ class StoreService {
                 if (StoreService.getInstance().$current_station.number !== api.getReservation().station.number) {
                     StoreService.getInstance().$current_marker.setIcon(StoreService.getInstance().$current_station.getLeafletIcon());
                     icon = StoreService.getInstance().$current_station.getLeafletIcon();
+                } else {
+                    StoreService.getInstance().$current_marker.setIcon(LeafletMap.reservedIcon);
                 }
             }
 
             //Si la station est celle réservé
             if (api.getReservation().station.number === station.number) {
                 // Icone rouge
-                icon = LeafletMap.reservedIcon;
+                icon = LeafletMap.reservedActiveIcon;
             } else {
                 icon =  LeafletMap.selectIcon;
             }

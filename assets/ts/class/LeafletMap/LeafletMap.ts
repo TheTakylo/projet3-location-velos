@@ -37,6 +37,12 @@ export default class LeafletMap {
         iconAnchor: [24, 54]
     });
 
+    static readonly reservedActiveIcon: L.Icon = L.icon({
+        iconUrl: "./build/images/markers/marker-blue-active.png",
+        iconSize: [55, 55],
+        iconAnchor: [24, 54]
+    });
+
     static readonly openIcon: L.Icon = L.icon({
         iconUrl: "./build/images/markers/marker-green.png",
         iconSize: [55, 55],
